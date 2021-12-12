@@ -19,10 +19,10 @@ export default class MedicoHandler {
     async create(req: Request, res: Response){
         const medico: MedicoModel = req.body
         try{
-            medicoService.create(medico)
+            await medicoService.create(medico)
             return res.status(201).send()
         }catch(err){
-            return res.status(500).json({
+            return res.status(400).json({
                 error: `Erro ao criar Médico: ${err}`
             });
         }

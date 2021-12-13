@@ -1,3 +1,4 @@
 export default interface FilterMedico{
-    id: number
+    id:            number
+    especialidade: string
 }

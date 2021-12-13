@@ -1,13 +1,15 @@
 import {Request, Response} from 'express';
 import MedicoService from '../service/medico';
 import MedicoModel from '../model/medico';
+import FilterMedico from '../model/filter';
 
 const medicoService = new MedicoService();
 
 export default class MedicoHandler {
     async get(req: Request, res: Response){
         try{
-            const data = await medicoService.get();
+            const filtro:FilterMedico = req.body
+            const data = await medicoService.get(filtro);
             return res.status(200).json(data);
         }catch(err){
             return res.status(500).json({

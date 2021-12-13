@@ -1,4 +1,5 @@
 import {db_all, db_run} from '../database/wrapper';
+import FilterMedico from '../model/filter';
 
 const insert = `INSERT INTO medico (id_pessoa, crm, especialidade, duracao) VALUES (?,?,?,?)`
 
@@ -14,8 +15,18 @@ export default class MedicoRepository{
         return await db_run(insert, [id_pessoa, crm, especialidade, duracao])
     }
 
-    async get(){
-        return await db_all(get, [])
+    async get(filter:FilterMedico){
+        let query_filter = ''
+        
+        if(filter.especialidade){
+            query_filter = `WHERE m.especialidade = '${filter.especialidade}';`
+        }
+
+        if(filter.id){
+            query_filter = `WHERE m.id = ${filter.id};`
+        }
+
+        return await db_all(get+query_filter, [])
     }
 
 }
